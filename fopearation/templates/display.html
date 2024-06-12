@@ -1,0 +1,71 @@
+<html>
+ <!-- dcoument based on:
+- https://pyscript.net/examples/matplotlib.html and adapting to https://stackoverflow.com/q/76014723/8508004
+
+-->
+{% extends 'base.html'%}
+{% block content %}
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/x-icon" href="https://pyscript.net/examples/favicon.png" />
+        <link
+            rel="stylesheet"
+            href="https://pyscript.net/latest/pyscript.css"
+        />
+        <script defer src="https://pyscript.net/latest/pyscript.js"></script>
+        <link rel="stylesheet" href="https://pyscript.net/examples/assets/css/examples.css" />
+        
+    </head>
+    <body>
+        
+        <section class="pyscript">
+          <input type="hidden" id="fname" value="{{kdata.csv_file.url}}">
+
+            <div id="mpl"></div>
+            <div id="mp"></div>
+
+ 
+                <py-config>
+                    packages = [
+                      "matplotlib",
+                      "numpy",
+                      "pandas"
+                    ]
+                    [js_modules.worker]
+                    "https://cdn.jsdelivr.net/npm/html-escaper" = "html_escaper"
+
+                  
+                </py-config>
+
+                <py-script>
+                    import matplotlib.pyplot as plt
+                    import numpy as np
+                    import pandas as pad
+                    from js import document
+                    from pathlib import Path
+                    from pyodide.http import open_url
+                    fig, ax = plt.subplots()
+                    fname=document.getElementById("fname").value
+                    url='..'+fname
+
+                    df=pad.read_csv(open_url(url))
+                    min_value=df['Salary'].mean()
+                    mode=df['Salary'].mode()
+                    stde=df['Salary'].std()
+                    print('Mean: '+str(min_value))
+                    print('Mode: '+str(min_value))
+                    print('Standard Deviation: '+str(min_value))
+
+                    plt.hist(df['Salary'])
+                    plt.xlabel("Salary")
+                    plt.ylabel('Values')
+                    plt.title('Histogram ')
+                    plt.show()
+
+                    display(fig, target="mpl")
+                   
+                </py-script>
+        </section>
+    </body>
+    {%endblock%}
+</html>

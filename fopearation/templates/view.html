@@ -1,0 +1,39 @@
+<html>
+  {% extends 'base.html'%}
+  {% block content %}
+
+<div class="container-fluid" style="width:90%;margin-top:8%">
+    <div class="container-fluid">
+        <h1 align="center" style="font-weight:bold;font-family : 'Monotype Corsiva' ; color : #E6120E ;margin-top:4%">View Files</h1>
+         </div>
+         <hr>
+                <table id="example" class="display" style="width:100%">
+                  <thead>
+                    <tr>
+                      <td>No</td>
+                     
+                      <td>File</td>
+                      <td>Action1</td>
+                      <td>Action2</td>
+
+                  </tr>
+              </thead>
+              <tbody>
+                {% for i in filedata %}
+                <tr>
+                  <td>{{forloop.counter}}</td>
+                  <td><a href="{{i.csv_file.url}}">{{i.csv_file}}
+                  </a><input type="hidden" name="csvf" id="csvf" value="{{i.csv_file}}"></td>
+                    <td>
+                        <a href="{% url 'displayhist' i.id %}" > <button class="btn btn-primary" onclick="">show hist</button></td>
+                          <td>
+                            <a href="{% url 'display' i.id %}" > <button class="btn btn-primary" onclick="">show Data</button></td>
+                        </tr>
+              {% endfor %}
+          </tbody>
+      </table>
+  </div>
+  
+  {%endblock%}
+
+   </html>

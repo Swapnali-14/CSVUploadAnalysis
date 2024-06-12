@@ -1,0 +1,23 @@
+<html>
+  <script>
+    function show_alert() {
+      alert("File uploaded Sucessfully");
+    }
+  </script>
+    {% extends 'base.html'%}
+    {% block content %}
+<form method="post" action="upload" enctype="multipart/form-data">
+{% csrf_token %}
+    <div class="card mx-auto" style="width: 30rem;margin-top:10%;">
+    <div class="card-header" style="margin-bottom:5%;">File Upload</div>
+    
+    <div class="form-group" >
+      <label >Upload CSV File</label>
+      <input type="file" accept=".csv" required class="form-control" style="margin-bottom:5%;" name="file1" id="file1" >
+    </div>
+   
+    <button type="submit" class="btn btn-primary" onclick="show_alert();">Submit</button>
+    </div>
+  </form>
+  {%endblock%}
+  </html>
